@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 
 namespace StringsAndDates
@@ -145,7 +146,7 @@ namespace StringsAndDates
             DateTime utcNow = DateTime.UtcNow;
 
             DateTime nowToUtc = now.ToUniversalTime();
-            #endregion
+            
 
             //Se in locale sono le 15, che ore sono a Londra?
             DateTime d4 = new DateTime(2022, 6, 27, 15, 0, 0, DateTimeKind.Local);
@@ -199,6 +200,155 @@ namespace StringsAndDates
             Debug.WriteLine(DateTime.Now.ToShortTimeString());
             Debug.WriteLine(DateTime.Now.ToShortDateString());
 
+            Debug.WriteLine(DateTime.Now.ToString("d"));
+            Debug.WriteLine(DateTime.Now.ToString("D"));
+            Debug.WriteLine(DateTime.Now.ToString("f"));
+            Debug.WriteLine(DateTime.Now.ToString("F"));
+            Debug.WriteLine(DateTime.Now.ToString("g"));
+            Debug.WriteLine(DateTime.Now.ToString("G"));
+            Debug.WriteLine(DateTime.Now.ToString("o"));
+            Debug.WriteLine(DateTime.Now.ToString("O"));
+            Debug.WriteLine(DateTime.UtcNow.ToString("o"));
+            Debug.WriteLine(DateTime.UtcNow.ToString("O"));
+            Debug.WriteLine(DateTime.Now.ToString("s"));
+            Debug.WriteLine(DateTime.Now.ToString("T"));
+            Debug.WriteLine(DateTime.Now.ToString("t"));
+            Debug.WriteLine(DateTime.Now.ToString("u"));
+            Debug.WriteLine(DateTime.Now.ToString("U"));
+
+            //Stampare la data e l'ora corrente nel formato    Lun 1 gen 20 - 7|45|12
+            string day = DateTime.Now.ToString("dddd").Substring(0, 1);
+            Debug.WriteLine(DateTime.Now.ToString(@"ddd d MMM \'yy - H|m|s|fff"));
+
+            var ukCulture = new CultureInfo("en-UK");
+            var usCulture = new CultureInfo("en-US");
+            var jpCulture = new CultureInfo("jp-JP");
+
+            Debug.WriteLine(DateTime.Now.ToString("G", ukCulture));
+            Debug.WriteLine(DateTime.Now.ToString("G", usCulture));
+            Debug.WriteLine(DateTime.Now.ToString("G", jpCulture));
+
+            Debug.WriteLine(DateTime.Now.ToString(@"ddd d MMM \'yy - H|m|s|fff", ukCulture));
+
+            string dateS = "31/10/2020";
+            try
+            {
+                DateTime convertedDate = DateTime.Parse(dateS);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            bool convResult = DateTime.TryParse(dateS, out DateTime convDate);
+
+            dateS = "10/31/2020";
+            convDate = DateTime.Parse(dateS,ukCulture);
+
+            dateS = "31|10|2020";
+            convDate = DateTime.ParseExact(dateS, "dd|MM|yyyy", CultureInfo.InvariantCulture);
+
+            dateS = "sab|31|10|2020";
+            convDate = DateTime.ParseExact(dateS, "ddd|dd|MM|yyyy", new CultureInfo("it-IT"));
+
+            //foreach (CultureInfo ci in CultureInfo.GetCultures(CultureTypes.NeutralCultures))
+            //{
+            //    Console.Write("{0,-7}", ci.Name);
+            //    Console.Write(" {0,-3}", ci.TwoLetterISOLanguageName);
+            //    Console.Write(" {0,-3}", ci.ThreeLetterISOLanguageName);
+            //    Console.Write(" {0,-3}", ci.ThreeLetterWindowsLanguageName);
+            //    Console.Write(" {0,-40}", ci.DisplayName);
+            //    Console.WriteLine(" {0,-40}", ci.EnglishName);
+            //}
+
+
+            //Write a C# Sharp program to calculate what day of the week is 40 days from this moment
+            Debug.WriteLine($"{DateTime.Now.AddDays(40):dddd}");
+
+            //Write C# Sharp Program to add one millisecond and 2.5 milliseconds to a given date value and display
+            DateTime d7 = DateTime.Now;
+            d7 = d7.AddMilliseconds(1000000).AddMilliseconds(2.5);
+
+            Debug.WriteLine($"{d7:O}");
+
+
+            //Quanti giorni sono passati dalla caduta del muro di Berlino?
+            DateTime d8 = new DateTime(1989, 8, 19);
+            var diff1 = DateTime.Now.Date - d8;
+            Debug.WriteLine($"{diff1.TotalDays}");
+            #endregion
+
+            double numd = Math.PI;
+            Debug.WriteLine(numd);
+            Debug.WriteLine(numd);
+            Debug.WriteLine(numd.ToString("F"));
+            Debug.WriteLine(numd.ToString("F0"));
+            Debug.WriteLine(numd.ToString("F1"));
+            Debug.WriteLine(numd.ToString("F4"));
+            Debug.WriteLine(numd.ToString("F9"));
+            Debug.WriteLine(numd.ToString("F15"));
+            Debug.WriteLine(numd.ToString("F25"));
+            Debug.WriteLine(numd.ToString("F50"));
+
+            numd = 1110121.3131198765;
+            Debug.WriteLine(numd.ToString("E"));
+            Debug.WriteLine(numd.ToString("E10"));
+            Debug.WriteLine(numd.ToString("E20"));
+
+            int numI = 123456;
+            Debug.WriteLine(numI.ToString("D"));
+            Debug.WriteLine(numI.ToString("D2"));
+            Debug.WriteLine(numI.ToString("D3"));
+            Debug.WriteLine(numI.ToString("D4"));
+            Debug.WriteLine(numI.ToString("D10"));
+            Debug.WriteLine(numI.ToString("D",ukCulture));
+
+            numd = 100.4564;
+            Debug.WriteLine(numd.ToString("C"));
+            Debug.WriteLine(numd.ToString("C2"));
+            Debug.WriteLine(numd.ToString("C4"));
+            Debug.WriteLine(numd.ToString("C10"));
+            Debug.WriteLine(numd.ToString("C10",ukCulture));
+            Debug.WriteLine(numd.ToString("C10",usCulture));
+            Debug.WriteLine(numd.ToString("C10",jpCulture));
+
+            Debug.WriteLine(numd.ToString("G"));
+            Debug.WriteLine(numd.ToString("G2"));
+            Debug.WriteLine(numd.ToString("G4"));
+            Debug.WriteLine(numd.ToString("G10"));
+            Debug.WriteLine(numd.ToString("G10", ukCulture));
+            Debug.WriteLine(numd.ToString("G10", usCulture));
+            Debug.WriteLine(numd.ToString("G10", jpCulture));
+
+            Debug.WriteLine(numd.ToString("N"));
+            Debug.WriteLine(numd.ToString("N2"));
+            Debug.WriteLine(numd.ToString("N4"));
+            Debug.WriteLine(numd.ToString("N10"));
+            Debug.WriteLine(numd.ToString("N10", ukCulture));
+            Debug.WriteLine(numd.ToString("N10", usCulture));
+            Debug.WriteLine(numd.ToString("N10", jpCulture));
+            numd = 1234.56;
+            Debug.WriteLine(numd.ToString("N10", usCulture));
+            Debug.WriteLine(numd.ToString("N10"));
+
+            numd = 1;
+            Debug.WriteLine(numd.ToString("P"));
+            numd = 0.5;
+            Debug.WriteLine(numd.ToString("P"));
+            Debug.WriteLine(numd.ToString("P2"));
+            Debug.WriteLine(numd.ToString("P6"));
+            Debug.WriteLine(numd.ToString("P6",ukCulture));
+            Debug.WriteLine(numd.ToString("P6",usCulture));
+
+            byte r = 255;
+            byte g = 0;
+            byte b = 0;
+            Debug.WriteLine($"{r:X2}{g:X2}{b:X2}");
+
+            numd = 12345.6789;
+            Debug.WriteLine(numd.ToString("00.0"));
+            Debug.WriteLine(numd.ToString("00.00"));
+            Debug.WriteLine(numd.ToString("0000000.000"));
             Console.ReadLine();
         }
 
