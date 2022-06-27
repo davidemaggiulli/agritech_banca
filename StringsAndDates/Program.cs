@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Text;
 
 namespace StringsAndDates
@@ -7,6 +8,7 @@ namespace StringsAndDates
     {
         static void Main(string[] args)
         {
+            #region String Examples
             Console.WriteLine("Hello World!");
 
             string s1 = "";
@@ -56,7 +58,7 @@ namespace StringsAndDates
 
             // Write a program in C# Sharp to count a total number of alphabets, digits and special characters in a string
             Console.Write("Input a string:   ");
-            input = Console.ReadLine();
+           // input = Console.ReadLine();
            
             CountCharacterTypes(input,out int alpha, out int digit, out int special);
             Console.WriteLine($"The string '{input}' has {alpha} alphabetic chars, {digit} numeric chars, {special} special chars");
@@ -84,7 +86,118 @@ namespace StringsAndDates
                 Console.WriteLine("Overflow");
                 d = decimal.MaxValue;
             }
+
+            //Given a non-empty string, write a method that returns it in compressed format
+            //kkkktttrrrrrrrrrr --> k4t3r10
+
+
+            input = "        I am a string       ";
+            string sbs = input.Substring(5);
+            Console.WriteLine(sbs);
+
+            sbs = input.Substring(5,3);
+            Debug.WriteLine(sbs);
+            Debug.WriteLine(input.ToUpper());
+            Debug.WriteLine(input.ToLower());
+            Debug.WriteLine(input.TrimStart());
+            Debug.WriteLine(input.TrimEnd());
+            Debug.WriteLine(input.Trim());
+            Debug.WriteLine(input.Replace("  ","-"));
+            Debug.WriteLine(input.Replace(' ','-'));
+
+            //Write a C# Sharp program to convert the first character of each word of a given string to uppercase
+            //i am a string -->I Am A String
+            input = "i am  a     string";
+            Debug.WriteLine($"'{input}' --> '{CamelCase(input)}'");
+
+            Debug.WriteLine(input.StartsWith("i am"));
+            Debug.WriteLine(input.StartsWith("pippo"));
+            Debug.WriteLine(input.EndsWith("ing"));
+            Debug.WriteLine(input.EndsWith("pippo"));
+            Debug.WriteLine(input.Contains("pippo"));
+            Debug.WriteLine(input.Contains("am"));
+            Debug.WriteLine(input.Contains("a  "));
+
+
+            //Esercizio 1
+            //Scrivere una funzione booleana per determinare se una string è PALINDROMA
+            //aabaa --> true
+            //aabcc --> false
+            //aabbbaa --> true
+            //aabbbbaa --> true
+            //aabbbbcc --> false
+
+            //Esercizio 2
+            //Scrivere una funzione che data una stringa, ne restituisca la sua versione reverse
+            //aabaa --> aabaa
+            //aabAA --> AAbaa
+            //casa --> asac
+
+            #endregion
+
+            #region DateTimes Examples
+            DateTime d1 = new DateTime(2022, 12, 1);
             
+            DateTime d2 = new DateTime(2022, 12, 1,10,12,59, DateTimeKind.Local);
+            DateTime d3 = new DateTime(2022, 12, 1,10,12,59,100, DateTimeKind.Local);
+
+            DateTime now = DateTime.Now;
+            DateTime utcNow = DateTime.UtcNow;
+
+            DateTime nowToUtc = now.ToUniversalTime();
+            #endregion
+
+            //Se in locale sono le 15, che ore sono a Londra?
+            DateTime d4 = new DateTime(2022, 6, 27, 15, 0, 0, DateTimeKind.Local);
+            DateTime d4Utc = d4.ToUniversalTime();   //W. Europe Standard Time
+
+
+            //Che ore sono in UTC le 9 di mattina a Tokio?
+            DateTime d5 = new DateTime(2022, 6, 27, 9, 0, 0);
+            TimeZoneInfo tokyoTz = TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time");
+            DateTime d5Utc = TimeZoneInfo.ConvertTimeToUtc(d5, tokyoTz);
+
+            //Che ore sono in Canada se in Kuwait sono le 10PM ?
+            DateTime d6 = new DateTime(2022, 6, 27, 22, 0, 0);
+            var kuwaitTz = TimeZoneInfo.FindSystemTimeZoneById("Arab Standard Time");
+            DateTime d6Utc = TimeZoneInfo.ConvertTimeToUtc(d6, kuwaitTz);
+            var canadaTz = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+            DateTime d6Canada = TimeZoneInfo.ConvertTimeFromUtc(d6Utc, canadaTz);
+            DateTime d6Canada1 = TimeZoneInfo.ConvertTime(d6, kuwaitTz, canadaTz);
+
+
+            //Aggiungi 25 ore e 55 secondi alla data corrente
+            now = DateTime.Now;
+            DateTime result = now.AddHours(25).AddSeconds(55);
+
+            TimeSpan ts = new TimeSpan(25, 0, 55);
+            result = DateTime.Now.Add(ts);   //DateTime.Now + ts
+
+
+            //Che ora era 10 ore, 2 minuti e 3 secondi fa?
+            result = DateTime.Now.AddHours(-10).AddMinutes(-2).AddSeconds(-3);
+            ts = new TimeSpan(10, 2, 3);
+            var result1 = DateTime.Now.Subtract(ts);//DateTime.Now - ts
+
+            //Quanta è passato da quando sono nato?
+            DateTime birthDate = new DateTime(1987, 6, 27, 12, 0, 0, 0);
+            var diff = DateTime.Now - birthDate;
+
+            DateTime dt1 = new DateTime(2020, 12, 20);
+            DateTime dt2 = new DateTime(2021, 12, 31, 5, 10, 20);
+            Console.WriteLine(dt1 > dt2);
+            Console.WriteLine(dt1 >= dt2);
+            Console.WriteLine(dt1 < dt2);
+            Console.WriteLine(dt1 <= dt2);
+            Console.WriteLine(dt1 = dt2);
+            Console.WriteLine(dt1 != dt2);
+
+            //Stampa data ora corrente
+            Debug.WriteLine(DateTime.Now.ToString());
+            Debug.WriteLine(DateTime.Now.ToLongDateString());
+            Debug.WriteLine(DateTime.Now.ToLongTimeString());
+            Debug.WriteLine(DateTime.Now.ToShortTimeString());
+            Debug.WriteLine(DateTime.Now.ToShortDateString());
 
             Console.ReadLine();
         }
@@ -130,6 +243,26 @@ namespace StringsAndDates
             }
             
             //return new CountResult(.......);
+        }
+
+
+        static string CamelCase(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return "";
+
+            var inputParts = input.Split(" ");
+            StringBuilder sb = new StringBuilder();
+            foreach(string part in inputParts)
+            {
+                if (string.IsNullOrEmpty(part))
+                    sb.Append("");
+                else
+                {
+                    sb.Append(part.Substring(0,1).ToUpper() + part.Substring(1) + " ");
+                }
+            }
+            return sb.ToString().TrimEnd();
         }
     }
 }
