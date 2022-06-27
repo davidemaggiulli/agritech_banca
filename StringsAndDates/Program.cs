@@ -123,10 +123,17 @@ namespace StringsAndDates
             //Esercizio 1
             //Scrivere una funzione booleana per determinare se una string è PALINDROMA
             //aabaa --> true
+            bool isP1 = IsPalindrome("aabaa");
             //aabcc --> false
             //aabbbaa --> true
             //aabbbbaa --> true
             //aabbbbcc --> false
+            bool isP2 = IsPalindrome("aabbbbcc");
+
+            bool isP3= IsPalindrome("     a  abb        bbcc     ".Replace(" ",""));
+
+
+
 
             //Esercizio 2
             //Scrivere una funzione che data una stringa, ne restituisca la sua versione reverse
@@ -413,6 +420,16 @@ namespace StringsAndDates
                 }
             }
             return sb.ToString().TrimEnd();
+        }
+
+        private static bool IsPalindrome(string input)
+        {
+            for(int i = 0; i < input.Length / 2; i++)
+            {
+                if (input[i] != input[input.Length - 1 - i])
+                    return false;
+            }
+            return true;
         }
     }
 }
