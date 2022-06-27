@@ -47,7 +47,7 @@ namespace Banca.Lib.Test
         [Fact]
         public void CreateAccountFroExistingCustomerTest()
         {
-
+            //Test da sviluppare...
         }
 
         [Fact]
